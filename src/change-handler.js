@@ -5,7 +5,7 @@ class ChangeHandler {
         this.amountDue = amountDue;
         this.cashTendered = 0;
         this.changeDue = 0;
-        changeReturn = changeReturn;
+        changeReturn = changeReturn;  // should be undefined until giveChange() is run.
         }
 
     insertCoin(type) {
@@ -87,19 +87,20 @@ class ChangeHandler {
                 this.changeDue -= (math.floor(this.changeDue/10)*10); // change remaining < 10
             }
             else if (this.changeDue%5===0){
-                changeReturn.nickles = this.changeDue/5;
+                changeReturn.nickels = this.changeDue/5;
                 return changeReturn; // can add this to any mod 0 lines
             }
             else if (this.changeDue%5===1){
-                changeReturn.nickles = math.floor(this.changeDue/5);
+                changeReturn.nickels = math.floor(this.changeDue/5);
                 this.changeDue -= (math.floor(this.changeDue/5)*5);
             }
-            else { // pennies is all thats left
+            else { // pennies are all thats left
                 changeReturn.pennies = this.changeDue;
                 return changeReturn;
             };
         } // I could put one return changeReturn; here, but don't need to since i worked it into each conditional, not sure which way is faster/better.
     };
+
     debtReset(){  // this will run after change has been given back to zero out the amountDue
         this.amountDue = 0;
         return this.amountDue;

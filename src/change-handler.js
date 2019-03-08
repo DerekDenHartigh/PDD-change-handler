@@ -5,7 +5,7 @@
  */
 
 // Variable declaration:
-let type, coin, change, cashTendered, changeReturn, quarters, dimes, nickels, pennies;
+let type, coin, change, cashTendered, changeReturn, quarters, dimes, nickels, pennies, someChange;
 class ChangeHandler {
 
     constructor(amountDue) {
@@ -29,6 +29,7 @@ class ChangeHandler {
             default: console.error(`${type} is not a valid coin!`);
         }
         this.isPaymentSufficient();
+        this.howMuchIOweU();
     };
 
     /**
@@ -36,39 +37,41 @@ class ChangeHandler {
      */
     isPaymentSufficient() {
         if (this.cashTendered<this.amountDue){
-            this.amountDue = this.amountDue-this.cashTendered;
+            this.amountDue = this.amountDue-this.cashTendered; // shouldn't change amountDue in changeHandle since it isn't returned?
             console.log(`Insufficient funds, please insert ${this.amountDue} cents more to purchase item.`);
             return false;
         }
         else if (this.cashTendered===this.amountDue){
-            this.amountDue = 0;
+            this.amountDue = 0; // not really necessary?
             console.log(`Huzzah! you have purchased your item, enjoy!`)
             return true;
         }
-        else if (this.cashTendered>this.amountDue)
-            this.changeDue = this.cashTendered-this.amountDue;  // I initially had this return this.changeDue, before I read the true/false req
-            console.log(`Huzzah! you have overpaid for your item, dispensing item & ${this.changeDue} cents`);
+        else if (this.cashTendered>this.amountDue){
+            someChange = this.cashTendered-this.amountDue;
+            this.amountDue = 0; // again, not really necessary, since it isn't returned
+            console.log(`Huzzah! you have overpaid for your item dispensing item & ${someChange} cents`);
             return true;
-    };
-    howMuchIOweU(){ // I made this to modify amountDue
-    if (this.cashTendered<this.amountDue){
-        this.amountDue = this.amountDue-this.cashTendered;
-        return this.amountDue;
         }
-    else if (this.cashTendered===this.amountDue || this.cashTendered>this.amountDue){
+    };
+    howMuchIOweU(){
+    if (this.cashTendered<this.amountDue){
+        this.amountDue -= this.cashTendered;
+        return this.amountDue;  // modifies this.amountDue for coins inserted
+        }
+    else if (this.cashTendered>=this.amountDue){
         this.amountDue = 0;
-        return this.amountDue;
+        return this.amountDue;  // you owe nothing after paying or overpaying
         }
     }
     oopsIOverpaid(){  // made this to set changeDue value when overpaying
         if (this.cashTendered>this.amountDue){
-            this.changeDue = this.cashTendered-this.amountDue;  // I initially had this return this.changeDue, before I read the true/false req
+            this.changeDue = this.cashTendered-this.amountDue;
             return this.changeDue; 
         }
     }
     giveChange() {
         if (this.isPaymentSufficient()===false){
-            this.insertCoin();
+            console.error("You betta give me mo money!"); return;
         }
         else{
             let changeReturn = {

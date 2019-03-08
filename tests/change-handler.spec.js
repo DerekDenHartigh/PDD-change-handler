@@ -26,37 +26,40 @@ describe("tests for ChangeHandler class", function() {
         changeHandler3.cashTendered = 125; // act
         expect(changeHandler3.isPaymentSufficient()).toBe(true); // assert
     });
-    it("checks howMuchIOweU() to see if it modifies this.change appropriately", function(){
+    // I think I have a problem with my howMuchIOweU & oopsIOverPaid tests, I can't get them to fail by putting in the wrong number.
+    it("checks howMuchIOweU() to see if it modifies this.amountDue appropriately", function(){
         let changeHandler = new ChangeHandler(100);  // arrange
-        changeHandler.cashTendered = 25; // act
+        changeHandler.cashTendered = 0; // act
         changeHandler.howMuchIOweU();
-        expect(changeHandler.changeDue===(0));// assert
-        
-        let changeHandler2 = new ChangeHandler(100);  // arrange
-        changeHandler2.cashTendered = 100; // act
-        changeHandler.howMuchIOweU();
-        expect(changeHandler2.changeDue===(0)); // assert
-    
-        let changeHandler3 = new ChangeHandler(100);  // arrange
-        changeHandler3.cashTendered = 125; // act
-        changeHandler.howMuchIOweU();
-        expect(changeHandler3.changeDue===(25)); // assert
-    });
-    // it("giveChange returns the obj changeReturn with coins in optimal denominations (most quarters, least pennies possible)", function() {
-    //     let changeHandler = new ChangeHandler();
-    //     expect(changeHandler.giveChange(125).changeReturn.quarters).toBe(5);
-    // });
-});
+        expect(changeHandler.howMuchIOweU()).toBe(100);// assert
 
-/*
-it("receiveAttackDamage removes health", function() {
-// Arrange
-var player = new Character({
-health: 20
+        let changeHandler2 = new ChangeHandler(100);  // arrange
+        changeHandler2.cashTendered = 25; // act
+        changeHandler2.howMuchIOweU();
+        expect(changeHandler2.howMuchIOweU()).toBe(75);// assert
+        
+        // let changeHandler3 = new ChangeHandler(100);  // arrange
+        // changeHandler3.cashTendered = 100; // act
+        // changeHandle3.howMuchIOweU();
+        // expect(changeHandler3.amountDue===(0)); // assert
+    
+        // let changeHandler4 = new ChangeHandler(100);  // arrange
+        // changeHandler4.cashTendered = 125; // act
+        // changeHandler4.howMuchIOweU();
+        // expect(changeHandler4.amountDue===(0)); // assert
+    });
+    it("checks oopsIOverPaid() to see if the proper changeDue is returned if cashTendered>amountDue", function(){
+        let changeHandler = new ChangeHandler(100);  // arrange, amountDue doesn't matter for this function
+        changeHandler.cashTendered = 100; // act
+        expect(changeHandler.oopsIOverpaid()).toBe(undefined);
+        let changeHandler2 = new ChangeHandler(100);
+        changeHandler2.cashTendered = 500;
+        expect(changeHandler2.oopsIOverpaid()).toBe(400);
+    })
+    // it("checks giveChange() to see if the proper change object is returned.", function(){
+    //     let changeHandler = new ChangeHandler();  // arrange
+    //     changeHandler.changeDue = 1; // act
+    //     changeHandler.howMuchIOweU();
+    //     expect(this.);// assert
+    // })
 });
-// Act
-player.receiveAttackDamage(5);
-// Assert
-expect(player.health).toBe(15);
-});
-*/

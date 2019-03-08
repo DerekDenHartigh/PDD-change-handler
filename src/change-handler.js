@@ -58,16 +58,16 @@ class ChangeHandler {
         this.amountDue -= this.cashTendered;
         return this.amountDue;  // modifies this.amountDue for coins inserted
         }
-    else if (this.cashTendered>=this.amountDue){
-        this.amountDue = 0;
-        return this.amountDue;  // you owe nothing after paying or overpaying
-        }
+    // else if (this.cashTendered>=this.amountDue){
+    //     this.amountDue = 0;
+    //     return this.amountDue;  // you owe nothing after paying or overpaying
+    //     }  // interfered with oopsIOverPaid
     }
     oopsIOverpaid(){  // made this to set changeDue value when overpaying
         if (this.cashTendered>this.amountDue){
             this.changeDue = this.cashTendered-this.amountDue;
             return this.changeDue; 
-        }
+        } // problem, howMuchIOweU resets amountDue...  going to comment that out of howMuchIOweU
     }
     giveChange() {
         if (this.isPaymentSufficient()===false){

@@ -30,28 +30,25 @@ describe("tests for ChangeHandler class", function() {
     it("checks howMuchIOweU() to see if it modifies this.amountDue appropriately", function(){
         let changeHandler = new ChangeHandler(100);  // arrange
         changeHandler.cashTendered = 0; // act
-        changeHandler.howMuchIOweU();
         expect(changeHandler.howMuchIOweU()).toBe(100);// assert
 
         let changeHandler2 = new ChangeHandler(100);  // arrange
         changeHandler2.cashTendered = 25; // act
-        changeHandler2.howMuchIOweU();
         expect(changeHandler2.howMuchIOweU()).toBe(75);// assert
         
-        // let changeHandler3 = new ChangeHandler(100);  // arrange
-        // changeHandler3.cashTendered = 100; // act
-        // changeHandle3.howMuchIOweU();
-        // expect(changeHandler3.amountDue===(0)); // assert
+        let changeHandler3 = new ChangeHandler(100);  // arrange
+        changeHandler3.cashTendered = 100; // act
+        expect(changeHandler3.howMuchIOweU()).toBe(undefined); // assert
     
-        // let changeHandler4 = new ChangeHandler(100);  // arrange
-        // changeHandler4.cashTendered = 125; // act
-        // changeHandler4.howMuchIOweU();
-        // expect(changeHandler4.amountDue===(0)); // assert
+        let changeHandler4 = new ChangeHandler(100);  // arrange
+        changeHandler4.cashTendered = 125; // act
+        expect(changeHandler4.howMuchIOweU()).toBe(undefined); // assert
     });
     it("checks oopsIOverPaid() to see if the proper changeDue is returned if cashTendered>amountDue", function(){
-        let changeHandler = new ChangeHandler(100);  // arrange, amountDue doesn't matter for this function
-        changeHandler.cashTendered = 100; // act
-        expect(changeHandler.oopsIOverpaid()).toBe(undefined);
+        let changeHandler = new ChangeHandler(100);  // arrange
+        changeHandler.cashTendered = 0; // act
+        expect(changeHandler.oopsIOverpaid()).toBe(undefined);// assert
+
         let changeHandler2 = new ChangeHandler(100);
         changeHandler2.cashTendered = 500;
         expect(changeHandler2.oopsIOverpaid()).toBe(400);

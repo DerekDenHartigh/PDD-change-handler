@@ -52,11 +52,27 @@ describe("tests for ChangeHandler class", function() {
         let changeHandler2 = new ChangeHandler(100);
         changeHandler2.cashTendered = 500;
         expect(changeHandler2.oopsIOverpaid()).toBe(400);
-    })
-    // it("checks giveChange() to see if the proper change object is returned.", function(){
-    //     let changeHandler = new ChangeHandler();  // arrange
-    //     changeHandler.changeDue = 1; // act
-    //     changeHandler.howMuchIOweU();
-    //     expect(this.);// assert
-    // })
+    });
+    it("checks giveChange() to see if the proper change object is returned.", function(){
+        let changeHandler = new ChangeHandler();  // arrange
+        changeHandler.changeDue = 0; // act
+        expect(changeHandler.giveChange()).toBe(undefined) // assert
+
+        let changeHandler2 = new ChangeHandler();  // arrange
+        changeHandler2.changeDue = 143; // act
+        expect(changeHandler2.giveChange()).toBe(undefined) // assert
+        /*
+        I should end up with something like this:
+            changeReturn ={
+            quarters: 5,
+            dimes: 1,
+            nickels: 1,
+            pennies: 3
+            }
+        */
+    });
+    it("checks the debtReset", function(){
+        let changeHandler = new ChangeHandler(100);
+        expect(changeHandler.debtReset()).toBe(0);
+    });
 });

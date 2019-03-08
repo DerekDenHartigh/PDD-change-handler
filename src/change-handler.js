@@ -1,10 +1,3 @@
-/**
- * This class handles change for a vending machine.
- * 
- * IMPORTANT: All amounts are in cents. E.g. $1.35 = 135. This will help with rounding errors.
- */
-
-// Variable declaration:
 let type, coin, change, cashTendered, changeReturn, quarters, dimes, nickels, pennies, someChange;
 class ChangeHandler {
 
@@ -12,12 +5,8 @@ class ChangeHandler {
         this.amountDue = amountDue;
         this.cashTendered = 0;
         this.changeDue = 0;
-    }
-
-    /**
-     * The customer inserts a coin, increasing the cashTendered.
-     * The parameter "type" is a string that is either quarter, dime, nickel, or penny
-     */
+        changeReturn = changeReturn;
+        }
 
     insertCoin(type) {
         let coin = type.toLowerCase();
@@ -32,10 +21,7 @@ class ChangeHandler {
         this.howMuchIOweU();
     };
 
-    /**
-     * Returns true if enough coins have been inserted to at least meet the this.amountDue
-     */
-    isPaymentSufficient() {
+    isPaymentSufficient() { // false if you haven't paid enough, true if you have
         if (this.cashTendered<this.amountDue){
             this.amountDue = this.amountDue-this.cashTendered; // shouldn't change amountDue in changeHandle since it isn't returned?
             console.log(`Insufficient funds, please insert ${this.amountDue} cents more to purchase item.`);
@@ -75,17 +61,18 @@ class ChangeHandler {
         }
         else{
             let changeReturn = {
-                quarters: 0,
-                dimes: 0,
-                nickels: 0,
-                pennies: 0
+            quarters: 0,
+            dimes: 0,
+            nickels: 0,
+            pennies: 0
             }
             if (this.changeDue===0){
                 console.warn("I owe you nothing! Select another item or be gone Mortal");
-                return this.changeDue;
+                return changeReturn;
             }
             else if (this.changeDue%25===0){
                 changeReturn.quarters = this.changeDue/25; // change due is divisible by 25, dispenses (changeReturn.quarters)# of quaters
+                return changeReturn; // can add this to any mod 0 lines
             }
             else if (this.changeDue%25===1){
                 changeReturn.quarters = math.floor(this.changeDue/25);
@@ -93,6 +80,7 @@ class ChangeHandler {
             }
             else if (this.changeDue%10===0){
                 changeReturn.dimes = this.changeDue/10;
+                return changeReturn; // can add this to any mod 0 lines
             }
             else if (this.changeDue%10===1){
                 changeReturn.dimes = math.floor(this.changeDue/10);
@@ -100,6 +88,7 @@ class ChangeHandler {
             }
             else if (this.changeDue%5===0){
                 changeReturn.nickles = this.changeDue/5;
+                return changeReturn; // can add this to any mod 0 lines
             }
             else if (this.changeDue%5===1){
                 changeReturn.nickles = math.floor(this.changeDue/5);
@@ -107,8 +96,12 @@ class ChangeHandler {
             }
             else { // pennies is all thats left
                 changeReturn.pennies = this.changeDue;
+                return changeReturn;
             };
-            return changeReturn;  // return the object with modified denomination counts.    
-        }
+        } // I could put one return changeReturn; here, but don't need to since i worked it into each conditional, not sure which way is faster/better.
     };
+    debtReset(){  // this will run after change has been given back to zero out the amountDue
+        this.amountDue = 0;
+        return this.amountDue;
+    }
 };

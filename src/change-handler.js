@@ -69,22 +69,31 @@ class ChangeHandler {
             if (this.changeDue===0){
                 console.warn("I owe you nothing! Select another item or be gone Mortal");
                 return changeReturn;
-            }
-            else if (this.changeDue%25===0){
-                changeReturn.quarters = this.changeDue/25; // change due is divisible by 25, dispenses (changeReturn.quarters)# of quaters
-                return changeReturn; // can add this to any mod 0 lines
-            }
-            else if (this.changeDue%25===1){
-                changeReturn.quarters = math.floor(this.changeDue/25);
-                this.changeDue -= (math.floor(this.changeDue/25)*25); // takes all the quarters out, remaining change<25
-            }
-            else if (this.changeDue%10===0){
-                changeReturn.dimes = this.changeDue/10;
-                return changeReturn; // can add this to any mod 0 lines
-            }
-            else if (this.changeDue%10===1){
-                changeReturn.dimes = math.floor(this.changeDue/10);
-                this.changeDue -= (math.floor(this.changeDue/10)*10); // change remaining < 10
+            };
+            
+            quarters1(){ // to modify quarter count of changeReturn
+                    changeReturn.quarters = math.floor(this.changeDue/25);
+                    return changeReturn.quarters; // takes all the quarters out, remaining change<25
+            };
+
+            quarters2(){ // to modify changeDue
+                if (this.changeDue%25===1){
+                    this.changeDue -= (math.floor(this.changeDue/25)*25);
+                    return this.changeDue; // takes all the quarters out, remaining change<25
+                }
+            dimes1(){ // to modify dime count of changeReturn
+                if (this.changeDue%10===0){
+                    changeReturn.dimes = this.changeDue/10;
+                    return changeReturn.dimes; // can add this to any mod 0 lines
+                }
+                else if (this.changeDue%10===1){
+                    changeReturn.dimes = math.floor(this.changeDue/10);
+                    return changeReturn.dimes; // change remaining < 10
+                }
+            dimes2(){ // to modify changeDue
+                if (this.changeDue%10===1){
+                    this.changeDue -= (math.floor(this.changeDue/10)*10); // change remaining < 10
+                }
             }
             else if (this.changeDue%5===0){
                 changeReturn.nickels = this.changeDue/5;

@@ -5,7 +5,7 @@
  */
 
 // Variable declaration:
-let type, coin, change;
+let type, coin, change, cashTendered, changeReturn;
 class ChangeHandler {
 
     constructor(amountDue) {
@@ -21,35 +21,35 @@ class ChangeHandler {
     insertCoin(type) {
         let coin = type.toLowerCase();
         switch(coin){
-            case "penny": cashTendered =+ 1; return cashTendered;
-            case "nickle": cashTendered =+ 5; return cashTendered;
-            case "dime": cashTendered =+ 10; return cashTendered;
-            case "quarter": cashTendered =+ 25; return cashTendered;
-            case "half-dollar": // Just me being extra
-            case "half dollar": cashTendered =+ 50; return cashTendered;
+            case "penny": this.cashTendered =+ 1; return this.cashTendered;
+            case "nickle": this.cashTendered =+ 5; return this.cashTendered;
+            case "dime": this.cashTendered =+ 10; return this.cashTendered;
+            case "quarter": this.cashTendered =+ 25; return this.cashTendered;
+            // case "half-dollar": // Just me being extra
+            // case "half dollar": cashTendered =+ 50; return cashTendered;
             default: console.error(`${type} is not a valid coin!`);
         }
-    }
+    };
 
     /**
-     * Returns true if enough coins have been inserted to at least meet the amountDue
+     * Returns true if enough coins have been inserted to at least meet the this.amountDue
      */
     isPaymentSufficient() {
-        if (cashTendered>amountDue){
-            amountDue = amountDue-cashTendered;
-            console.log(`Insufficient funds, please insert ${amountDue} more cents to purchase item.`);
-            return amountDue;
+        if (this.cashTendered>this.amountDue){
+            this.amountDue = this.amountDue-this.cashTendered;
+            console.log(`Insufficient funds, please insert ${this.amountDue} more cents to purchase item.`);
+            return this.amountDue;
         }
-        if (cashTendered=amountDue){
-            amountDue = 0;
+        if (this.cashTendered=this.amountDue){
+            this.amountDue = 0;
             console.log(`Huzzah! you have purchased your item, enjoy!`)
-            return amountDue;
+            return this.amountDue;
         }
-        if (cashTendered>amountDue)
-            change = cashTendered-amountDue;
+        if (this.cashTendered>this.amountDue)
+            change = this.cashTendered-this.amountDue;
             console.log(`Huzzah! you have overpaid for your item, dispensing item & ${change} cents`);
             return change;
-    }
+    };
 
     giveChange() {
         // TODO return the correct change in the following format...
@@ -60,30 +60,31 @@ class ChangeHandler {
             nickels: 0,
             pennies: 0
         }
-        if (change%25=0){
+
+        if (change%25===0){
             changeReturn.quarters = change/25;
         }
-        if (change%25=1){
+        else if (change%25===1){
             changeReturn.quarters = math.floor(change/25);
             change -= (math.floor(change/25)*25); // takes all the quarters out, remaining change<25
         }
-        if (change%10=0){
+        else if (change%10===0){
             changeReturn.dimes = change/10;
         }
-        if (change%10=1){
+        else if (change%10===1){
             changeReturn.dimes = math.floor(change/10);
             change -= (math.floor(change/10)*10); // change remaining < 10
         }
-        if (change%5=0){
+        else if (change%5===0){
             changeReturn.nickles = change/5;
         }
-        if (change%5=1){
+        else if (change%5===1){
             changeReturn.nickles = math.floor(change/5);
             change -= (math.floor(change/5)*5);
         }
         else { // pennies is all thats left
             changeReturn.pennies = change;
-        }
+        };
         return changeReturn;  // return the object with modified denomination counts.
-    }
-}
+    };
+};

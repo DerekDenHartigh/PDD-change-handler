@@ -1,4 +1,4 @@
-let type, coin, change, cashTendered, changeReturn, quarters, dimes, nickels, pennies, someChange;
+let type, coin, change, cashTendered, changeReturn, quarters, dimes, nickels, pennies, someChange, moneyArray;
 class ChangeHandler {
 
     constructor(amountDue) {
@@ -60,7 +60,7 @@ class ChangeHandler {
             console.error("You betta give me mo money!"); return;
         }
         else{
-            let changeReturn = {
+            changeReturn = {
             quarters: 0,
             dimes: 0,
             nickels: 0,
@@ -69,47 +69,28 @@ class ChangeHandler {
             if (this.changeDue===0){
                 console.warn("I owe you nothing! Select another item or be gone Mortal");
                 return changeReturn;
-            };
-            
-            quarters1(){ // to modify quarter count of changeReturn
-                    changeReturn.quarters = math.floor(this.changeDue/25);
-                    return changeReturn.quarters; // takes all the quarters out, remaining change<25
-            };
-
-            quarters2(){ // to modify changeDue
-                if (this.changeDue%25===1){
-                    this.changeDue -= (math.floor(this.changeDue/25)*25);
-                    return this.changeDue; // takes all the quarters out, remaining change<25
-                }
-            dimes1(){ // to modify dime count of changeReturn
-                if (this.changeDue%10===0){
-                    changeReturn.dimes = this.changeDue/10;
-                    return changeReturn.dimes; // can add this to any mod 0 lines
-                }
-                else if (this.changeDue%10===1){
-                    changeReturn.dimes = math.floor(this.changeDue/10);
-                    return changeReturn.dimes; // change remaining < 10
-                }
-            dimes2(){ // to modify changeDue
-                if (this.changeDue%10===1){
-                    this.changeDue -= (math.floor(this.changeDue/10)*10); // change remaining < 10
-                }
             }
-            else if (this.changeDue%5===0){
-                changeReturn.nickels = this.changeDue/5;
-                return changeReturn; // can add this to any mod 0 lines
-            }
-            else if (this.changeDue%5===1){
-                changeReturn.nickels = math.floor(this.changeDue/5);
-                this.changeDue -= (math.floor(this.changeDue/5)*5);
-            }
-            else { // pennies are all thats left
-                changeReturn.pennies = this.changeDue;
+            else {
+                moneyArray[0] = this.changeDue;  // sets 1st item of money array to changeDue
+                quarters = math.floor(moneyArray[0]/25); // # of quarters
+                moneyArray[1] = quarters; // sets 2nd item to # of quarters
+                moneyArray[0] -= math.floor(moneyArray[0]/25); // reduces amount of change due in the array by value of #of quarters
+                dimes = math.floor(moneyArray[0]/10); //# of dimes
+                moneyArray[2] = dimes; // puts dimes into moneyArray
+                moneyArray[0] -= math.floor(moneyArray[0]/10); // re-evaluates change due sans dimes
+                nickels = math.floor(moneyArray[0]/5);  // # of nickels
+                moneyArray[3] = nickels; // adds nickels to moneyArray
+                moneyArray[0] -= math.floor(moneyArray[0]/5); // re-evaluates change due sans nickels
+                // now moneyArray[0] = #pennies left to dispense
+                // now moneyArray = [#pennies, #Quarters, #Dimes, #Nickels] - time to assign them to the changeReturn object
+                changeReturn.quaters = moneyArray[1];
+                changeReturn.dimes = moneyArray[2];
+                changeReturn.nickels = moneyArray[3];
+                changeReturn.pennies = moneyArray[0];
                 return changeReturn;
-            };
-        } // I could put one return changeReturn; here, but don't need to since i worked it into each conditional, not sure which way is faster/better.
-    };
-
+            }
+        }
+    }
     debtReset(){  // this will run after change has been given back to zero out the amountDue
         this.amountDue = 0;
         return this.amountDue;

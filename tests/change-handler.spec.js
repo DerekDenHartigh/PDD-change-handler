@@ -55,21 +55,24 @@ describe("tests for ChangeHandler class", function() {
     });
     it("checks giveChange() to see if the proper change object is returned.", function(){
         let changeHandler = new ChangeHandler();  // arrange
-        changeHandler.changeDue = 0; // act
-        expect(changeHandler.giveChange()).toBe(undefined) // assert
+        changeHandler.changeDue = 0;
+        let changeReturn = {
+            quarters: 0,
+            dimes: 0,
+            nickels: 0,
+            pennies: 0
+            } // act
+        expect(changeHandler.giveChange()).toBe(changeReturn) // assert
 
         let changeHandler2 = new ChangeHandler();  // arrange
         changeHandler2.changeDue = 143; // act
-        expect(changeHandler2.giveChange()).toBe(undefined) // assert
-        /*
-        I should end up with something like this:
-            changeReturn ={
+        let changeReturn2 = {
             quarters: 5,
             dimes: 1,
             nickels: 1,
             pennies: 3
-            }
-        */
+            } // act
+        expect(changeHandler2.giveChange()).toBe(changeReturn2)
     });
     it("checks the debtReset", function(){
         let changeHandler = new ChangeHandler(100);

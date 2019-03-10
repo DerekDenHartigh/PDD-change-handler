@@ -72,8 +72,7 @@ describe("tests for ChangeHandler class", function() {
             nickels: 1,
             pennies: 3
             } // act
-        changeHandler2.giveChange(); // act
-        expect(changeHandler2.changeReturn).toEqual(changeReturn2)
+        expect(changeHandler2.giveChange()).toEqual(changeReturn2)
         // expect(changeHandler2.giveChange()).toEqual(changeReturn2)
     });
     it("checks the debtReset", function(){

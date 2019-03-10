@@ -1,4 +1,4 @@
-let type, coin, change, cashTendered, quarters, dimes, nickels, pennies, someChange;
+ let type, coin, change, cashTendered, quarters, dimes, nickels, pennies, someChange;
 let moneyArray = [];
 let changeReturn ={};
 class ChangeHandler {
@@ -100,3 +100,4 @@ class ChangeHandler {
         return this.amountDue;
     }
 };
+

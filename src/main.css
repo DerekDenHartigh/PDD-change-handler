@@ -1,0 +1,101 @@
+body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-items: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+#vending-machine{
+    display: flex;
+    margin-left: 20px;
+    margin-right: 20px;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: grey;
+    height: 80vh;
+    width: 40vw;
+}
+#banner{
+    display: flex;
+    font-size: 3em;
+    font-weight: 1000;
+    font-family: 'Times New Roman', Times, serif;
+}
+#display-window{
+    background-color: rgb(60, 113, 134);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    width: 60%;
+}
+.display-item{
+    display: flex;
+    width: 80px;
+    height: 120px;
+}
+#item-return{
+    background-color: rgb(53, 53, 53);
+    display: flex;
+    align-self: center;
+    height: 10%;
+    width: 60%;
+    margin-bottom: 20px;
+}
+#wallet{
+    position: relative;
+    width: 500px;
+    height: 500px;
+}
+#wallet-img{
+    position: absolute;
+    top: 30%;
+    width: 500px;
+    height: 400px;
+}
+.bill{
+    position: relative;
+    height: 400px;
+    width: 400px;
+    left: -50px;
+    top: -80px;
+    transform: rotate(-30deg);
+}
+.coin{
+    display: block;
+    position: absolute;
+}
+#penny{
+    height: 19mm;
+    width: 19mm;
+    right: 40px;
+    bottom: 40px;
+}
+#nickle{
+    height: 21mm;
+    width: 21mm;
+    right: 100px;
+    bottom: 100px;
+}
+#canadian-nickle{
+    height: 21mm;
+    width: 21mm;
+    right: 100px;
+    bottom: -10px;
+}
+#dime{
+    height: 18mm;
+    width: 18mm;
+    right: 190px;
+    bottom: 15px;
+}
+#quarter{
+    height: 24mm;
+    width: 24mm;
+    right: 230px;
+    bottom: 80px;
+}

@@ -26,7 +26,7 @@ describe("tests for ChangeHandler class", function() {
         changeHandler3.cashTendered = 125; // act
         expect(changeHandler3.isPaymentSufficient()).toBe(true); // assert
     });
-    // I think I have a problem with my howMuchIOweU & oopsIOverPaid tests, I can't get them to fail by putting in the wrong number.
+
     it("checks howMuchIOweU() to see if it modifies this.amountDue appropriately", function(){
         let changeHandler = new ChangeHandler(100);  // arrange
         changeHandler.cashTendered = 0; // act
@@ -62,7 +62,7 @@ describe("tests for ChangeHandler class", function() {
             nickels: 0,
             pennies: 0
             } // act
-        expect(changeHandler.giveChange()).toBe(changeReturn) // assert
+        expect(changeHandler.giveChange()).toEqual(changeReturn) // assert
 
         let changeHandler2 = new ChangeHandler();  // arrange
         changeHandler2.changeDue = 143; // act
@@ -72,7 +72,9 @@ describe("tests for ChangeHandler class", function() {
             nickels: 1,
             pennies: 3
             } // act
-        expect(changeHandler2.giveChange()).toBe(changeReturn2)
+        changeHandler2.giveChange(); // act
+        expect(changeHandler2.changeReturn).toEqual(changeReturn2)
+        // expect(changeHandler2.giveChange()).toEqual(changeReturn2)
     });
     it("checks the debtReset", function(){
         let changeHandler = new ChangeHandler(100);

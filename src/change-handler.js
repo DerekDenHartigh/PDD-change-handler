@@ -1,11 +1,13 @@
-let type, coin, change, cashTendered, changeReturn, quarters, dimes, nickels, pennies, someChange, moneyArray;
+let type, coin, change, cashTendered, quarters, dimes, nickels, pennies, someChange;
+let moneyArray = [];
+let changeReturn ={};
 class ChangeHandler {
 
     constructor(amountDue) {
         this.amountDue = amountDue;
         this.cashTendered = 0;
         this.changeDue = 0;
-        changeReturn = changeReturn;  // should be undefined until giveChange() is run.
+        this.changeReturn = changeReturn;  // should be undefined until giveChange() is run.
         }
 
     insertCoin(type) {
@@ -72,21 +74,23 @@ class ChangeHandler {
             }
             else {
                 moneyArray[0] = this.changeDue;  // sets 1st item of money array to changeDue
-                quarters = math.floor(moneyArray[0]/25); // # of quarters
+                quarters = Math.floor(moneyArray[0]/25); // # of quarters
                 moneyArray[1] = quarters; // sets 2nd item to # of quarters
-                moneyArray[0] -= math.floor(moneyArray[0]/25); // reduces amount of change due in the array by value of #of quarters
-                dimes = math.floor(moneyArray[0]/10); //# of dimes
+                moneyArray[0] -= Math.floor(moneyArray[0]/25)*25; // reduces amount of change due in the array by value of #of quarters
+                dimes = Math.floor(moneyArray[0]/10); //# of dimes
                 moneyArray[2] = dimes; // puts dimes into moneyArray
-                moneyArray[0] -= math.floor(moneyArray[0]/10); // re-evaluates change due sans dimes
-                nickels = math.floor(moneyArray[0]/5);  // # of nickels
+                moneyArray[0] -= Math.floor(moneyArray[0]/10)*10; // re-evaluates change due sans dimes
+                nickels = Math.floor(moneyArray[0]/5);  // # of nickels
                 moneyArray[3] = nickels; // adds nickels to moneyArray
-                moneyArray[0] -= math.floor(moneyArray[0]/5); // re-evaluates change due sans nickels
+                moneyArray[0] -= Math.floor(moneyArray[0]/5)*5; // re-evaluates change due sans nickels
                 // now moneyArray[0] = #pennies left to dispense
                 // now moneyArray = [#pennies, #Quarters, #Dimes, #Nickels] - time to assign them to the changeReturn object
-                changeReturn.quaters = moneyArray[1];
+                console.log(`pennies, quarters, dimes, nickels || ${moneyArray}`)
+                changeReturn.quarters = moneyArray[1];
                 changeReturn.dimes = moneyArray[2];
                 changeReturn.nickels = moneyArray[3];
                 changeReturn.pennies = moneyArray[0];
+                console.log({changeReturn})  // looks good
                 return changeReturn;
             }
         }
